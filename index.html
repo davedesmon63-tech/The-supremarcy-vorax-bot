@@ -1,0 +1,49 @@
+export default async function handler(req, res) {
+  const body = req.body;
+  if (!body.message) return res.status(200).send('ok');
+  
+  const token = process.env.BOT_TOKEN;
+  const chatId = body.message.chat.id;
+  const text = body.message.text || '';
+
+  let reply = "";
+
+  if (text === '/start') {
+    reply = "Bienvenue sur VORAX CI Officiel ! 🔥\n\n" +
+            "Voici les commandes :\n" +
+            "/menu - Voir le message de meilleurs vœux\n" +
+            "/end - Finir\n" +
+            "/help - Aide";
+  } 
+  else if (text === '/menu') {
+    reply = ` https://postimg.cc/0K9Sfd8R
+Whatsapp users, I am selling sexy video at low price, you can get the best sexy video from me for money Ã°Å¸Â¤â€˜Ã°Å¸â€™Â°Ã°Å¸Â¥Âµ I will give you this sexy video on Whatsapp at the price of videos
+Ã¢Å“â€¦ 100 exciting videos for children, price $50
+Ã¢Å“â€¦ 100 sexual videos for people over 18 years old, price is $80
+Ã¢Å“â€¦ Mix childrenÃ¢â‚¬â„¢s video and sexy video for adults only, 100 videos, price is $70
+Gadis, aku menculikmu dan memukul vaginamu Ã°Å¸â€™â€¹ dan membuat video, beritahu ayahmu kirimi aku $300 kalau tidak, aku akan membuat videomu terkenal di WhatsApp Ã¢Ëœ Ã¯Â¸ÂÃ¢Ëœ Ã¯Â¸Â
+www.whatsappp.com
+We have an example of this type of video in the link below Ã°Å¸â€˜â€¡Ã¢Â¬â€¡Ã¯Â¸Â
+https://www.xnxx.com/video-13lapn3e/hotbrunettelesbiandanadearmondfingeringgapingasstohotbabesarashevonthenshovingmetalbalinherandandanal
+If you need any of these, contact me at the number I have provided below
+https://api.whatsapp.com/send?phone=+243838546688 `;
+  } 
+  else if (text === '/end') {
+    reply = "Merci beaucoup d'avoir utilisé VORAX Bot ! 🙏\n\n" +
+            "N'hésite pas à revenir, et passe une excellente journée ! A bientôt ! 👋";
+  }
+  else if (text === '/help') {
+    reply = "Commandes disponibles :\n/start - Démarrer\n/menu - Meilleurs vœux\n/end - Merci et au revoir";
+  }
+  else {
+    reply = "Je n'ai pas compris. Tape /menu pour voir les vœux ou /help pour l'aide.";
+  }
+
+  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: chatId, text: reply })
+  });
+
+  return res.status(200).send('ok');
+}
